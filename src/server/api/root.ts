@@ -9,7 +9,7 @@ import { generateRouter } from '~/server/api/routers/generate'
  */
 export const appRouter = createTRPCRouter({
   example: exampleRouter,
-  generate: generateRouter
+  generate: generateRouter,
 });
 
 // export type definition of API

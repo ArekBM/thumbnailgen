@@ -6,6 +6,7 @@ import { api } from '~/utils/api'
 import { FormWrapper } from '~/components/FormWrapper'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { Button } from '~/components/Button'
+import { b64Image } from '~/data/b64img'
 
 const GeneratePage: NextPage = () => {
 
@@ -15,7 +16,7 @@ const GeneratePage: NextPage = () => {
 
     const generateIcon = api.generate.generateIcon.useMutation({
         onSuccess(data){
-            if(!data.imageUrl) return;
+            if(!data?.imageUrl) return;
             setImageUrl(data.imageUrl)
         }
     })
@@ -38,6 +39,7 @@ const GeneratePage: NextPage = () => {
         generateIcon.mutate({
             prompt: form.prompt
         })
+        setForm({ prompt: '' })
     }
 
     return (
@@ -73,7 +75,7 @@ const GeneratePage: NextPage = () => {
                     <Button>Submit</Button>
                 </FormWrapper>
             </form>
-            <img src={imageUrl} />
+            <img src={`data:image/png;base64, ${imageUrl}`} />
         </main>
         </>
     )

@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { env } from "~/env.mjs"
+import AWS from 'aws-sdk';
 
 import {
   createTRPCRouter,
@@ -8,11 +9,36 @@ import {
   protectedProcedure,
 } from "~/server/api/trpc";
 import { Configuration, OpenAIApi } from "openai";
+import { b64Image } from "~/data/b64img";
+
+const s3 = new AWS.S3({
+    credentials: {
+        accessKeyId : env.ACCESS_KEY,
+        secretAccessKey: env.SECRET_ACCESS_KEY,
+    },
+    region: 'us-west-1'
+})
+
 
 const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
+
+async function generateIcon(prompt: string) : Promise< string | undefined > {
+    if(env.MOCK_KEY === 'true'){
+        return b64Image
+    } else {
+        const response = await openai.createImage({
+            prompt : prompt,
+            n: 1,
+            size: '512x512',
+            response_format : 'b64_json'
+          });
+          console.log(response.data.data[0]?.b64_json)
+          return response.data.data[0]?.b64_json;
+    }
+}
 
 
 export const generateRouter = createTRPCRouter({
@@ -44,16 +70,19 @@ export const generateRouter = createTRPCRouter({
             });
         }
 
-        const response = await openai.createImage({
-            prompt: 'cat eating pancakes',
-            n: 1,
-            size: '1024x1024',
-        });
+        const b64Img = await generateIcon(input.prompt)
 
-        const image_url = response.data.data[0]?.url;
+        await s3.putObject({
+            Bucket: 'thumbnail-gen',
+            Body: Buffer.from(b64Img!, 'base64'),
+            Key: 'my-image.png',
+            ContentEncoding: 'base64',
+            ContentType: 'image/gif',
+        }).promise();
 
         return {
-            imageUrl : image_url,
-        };
+            imageUrl: b64Img
+        }
+
     }),
 });
