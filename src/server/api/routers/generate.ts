@@ -19,6 +19,8 @@ const s3 = new AWS.S3({
     region: 'us-west-1'
 })
 
+const BUCKET_NAME = 'thumbnail-gen'
+
 
 const configuration = new Configuration({
   apiKey: env.OPENAI_API_KEY,
@@ -72,16 +74,23 @@ export const generateRouter = createTRPCRouter({
 
         const b64Img = await generateIcon(input.prompt)
 
+        const icon = await ctx.prisma.icon.create({
+            data: {
+                prompt: input.prompt,
+                userId: ctx.session.user.id,
+            }
+        })
+
         await s3.putObject({
-            Bucket: 'thumbnail-gen',
+            Bucket: BUCKET_NAME,
             Body: Buffer.from(b64Img!, 'base64'),
-            Key: 'my-image.png',
+            Key: icon.id,
             ContentEncoding: 'base64',
             ContentType: 'image/gif',
         }).promise();
 
         return {
-            imageUrl: b64Img
+            imageUrl: `https://${BUCKET_NAME}.s3.us-west-1.amazonaws.com/${icon.id}`
         }
 
     }),

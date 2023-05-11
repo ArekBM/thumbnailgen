@@ -27,6 +27,10 @@ export const env = createEnv({
     MOCK_KEY : z.string(),
     ACCESS_KEY : z.string(),
     SECRET_ACCESS_KEY : z.string(),
+    NEXT_PUBLIC_STRIPE_KEY: z.string(),
+    NEXT_SECRET_STRIPE_KEY: z.string(),
+    HOST_NAME: z.string(),
+    PRICE_ID: z.string(),
   },
 
   /**
@@ -36,6 +40,7 @@ export const env = createEnv({
    */
   client: {
     // NEXT_PUBLIC_CLIENTVAR: z.string().min(1),
+    NEXT_PUBLIC_STRIPE_KEY: z.string()
   },
 
   /**
@@ -53,5 +58,9 @@ export const env = createEnv({
     MOCK_KEY : process.env.MOCK_KEY,
     ACCESS_KEY : process.env.ACCESS_KEY,
     SECRET_ACCESS_KEY : process.env.SECRET_ACCESS_KEY,
+    NEXT_PUBLIC_STRIPE_KEY: process.env.NEXT_PUBLIC_STRIPE_KEY,
+    NEXT_SECRET_STRIPE_KEY: process.env.NEXT_SECRET_STRIPE_KEY,
+    HOST_NAME : process.env.HOST_NAME,
+    PRICE_ID : process.env.PRICE_ID,
   },
 });

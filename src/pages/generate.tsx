@@ -7,12 +7,17 @@ import { FormWrapper } from '~/components/FormWrapper'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { Button } from '~/components/Button'
 import { b64Image } from '~/data/b64img'
+import Image from 'next/image';
+import { useBuyCredits } from '~/hooks/useBuyCredits'
+
 
 const GeneratePage: NextPage = () => {
 
     const [form, setForm] = useState({prompt: ''})
 
     const [imageUrl, setImageUrl] = useState('')
+
+    const { buyCredits } = useBuyCredits()
 
     const generateIcon = api.generate.generateIcon.useMutation({
         onSuccess(data){
@@ -57,7 +62,14 @@ const GeneratePage: NextPage = () => {
                 Login
             </Button>
             }
-            {isLoggedIn &&
+            {isLoggedIn && (
+            <>
+            <Button 
+                onClick={() =>
+                    buyCredits().catch(console.error)
+                }
+                >Buy Credits
+            </Button>
             <Button 
                 onClick={() => 
                     signOut().catch(console.error)
@@ -65,7 +77,8 @@ const GeneratePage: NextPage = () => {
             >
                 Logout
             </Button>
-            }
+            </>
+            )}
             <form className='flex flex-col gap-5 items-center justify-center' onSubmit={handleFormSubmit}>
                 <FormWrapper>
                     <label>Prompt</label>
@@ -75,7 +88,12 @@ const GeneratePage: NextPage = () => {
                     <Button>Submit</Button>
                 </FormWrapper>
             </form>
-            <img src={`data:image/png;base64, ${imageUrl}`} />
+            <Image 
+                src={imageUrl} 
+                alt='Image of your prompt'
+                width='100'
+                height='100'
+            />
         </main>
         </>
     )
