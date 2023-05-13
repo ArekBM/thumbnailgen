@@ -31,6 +31,7 @@ export const env = createEnv({
     NEXT_SECRET_STRIPE_KEY: z.string(),
     HOST_NAME: z.string(),
     PRICE_ID: z.string(),
+    STRIPE_WEBHOOK_SECRET: z.string(),
   },
 
   /**
@@ -62,5 +63,6 @@ export const env = createEnv({
     NEXT_SECRET_STRIPE_KEY: process.env.NEXT_SECRET_STRIPE_KEY,
     HOST_NAME : process.env.HOST_NAME,
     PRICE_ID : process.env.PRICE_ID,
+    STRIPE_WEBHOOK_SECRET : process.env.STRIPE_WEBHOOK_SECRET,
   },
 });
