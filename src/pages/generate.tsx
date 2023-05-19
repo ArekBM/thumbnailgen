@@ -8,12 +8,13 @@ import { signIn, signOut, useSession } from 'next-auth/react'
 import { Button } from '~/components/Button'
 import { b64Image } from '~/data/b64img'
 import Image from 'next/image';
+import clsx from 'clsx';
 
 
 
 const GeneratePage: NextPage = () => {
 
-    const [form, setForm] = useState({prompt: ''})
+    const [form, setForm] = useState({prompt: '', color: ''})
 
     const [imageUrl, setImageUrl] = useState('')
 
@@ -23,6 +24,17 @@ const GeneratePage: NextPage = () => {
             setImageUrl(data.imageUrl)
         }
     })
+
+    const colors = [
+        'Blue',
+        'Red',
+        'Yellow',
+        'Green',
+        'White',
+        'Black',
+        'Pink',
+        'Purple'
+    ]
 
     const session = useSession()
 
@@ -40,32 +52,59 @@ const GeneratePage: NextPage = () => {
     function handleFormSubmit(e: React.FormEvent){
         e.preventDefault()
         generateIcon.mutate({
-            prompt: form.prompt
+            prompt: form.prompt,
+            color: form.color
         })
-        setForm({ prompt: '' })
+        setForm((prev) => ({...prev, prompt: ''}))
     }
 
     return (
         <>
         <Head>
-
+            <title>Generate Image</title>
         </Head>
-        <main className='flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#35DFFF] to-[#3585FF]'>
-            <form className='flex flex-col gap-5 items-center justify-center' onSubmit={handleFormSubmit}>
+        <main className='container mx-auto mt-24 flex min-h-screen flex-col gap-4'>
+            <h1 className='text-6xl'>Generate your Image</h1>
+            <p className='text-4xl'>Fill out the form below to start generating with AI</p>
+            <form className='flex flex-col gap-5' onSubmit={handleFormSubmit}>
+                <h2 className='text-xl'>
+                    1. Describe the image 
+                </h2>
                 <FormWrapper>
                     <label>Prompt</label>
-                    <Input
-                       value={form.prompt} onChange={updateForm('prompt')}
-                    ></Input>
-                    <Button>Submit</Button>
+                    <Input value={form.prompt} onChange={updateForm('prompt')}></Input>
                 </FormWrapper>
+                <h2 className='text-xl'>
+                    2. Choose your color
+                </h2>
+                <FormWrapper className='mb-12 grid grid-cols-4'>
+                    {colors.map((color) => (
+                        <label className='text-2xl' key={color}>
+                            <input type='radio' name='color' value={color}
+                            checked={color === form.color}
+                            onChange={() => setForm((prev) => ({ ...prev, color}))}
+                            ></input>
+
+                            {color}
+                        </label>
+                    ))}
+
+                </FormWrapper>
+                <Button disabled={generateIcon.isLoading} isLoading={generateIcon.isLoading}>Submit</Button>
             </form>
-            <Image 
-                src={imageUrl} 
-                alt='Image of your prompt'
-                width='512'
-                height='512'
-            />
+            {imageUrl && (
+                <>
+                    <h1 className='text-xl'>Your Icons</h1>
+                    <section className='grid grid-cols-4 gap-4'>
+                        <Image 
+                            src={imageUrl} 
+                            alt='Image of your prompt'
+                            width='512'
+                            height='512'
+                        />
+                    </section>
+                </>
+            )}
         </main>
         </>
     )
