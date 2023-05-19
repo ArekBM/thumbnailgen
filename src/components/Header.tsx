@@ -11,7 +11,7 @@ export function Header() {
 
     const { buyCredits } = useBuyCredits()
 
-    return <header className='container mx-auto flex px-4 h-16 items-center justify-between dark:bg-gray-800'> 
+    return <header className='container mx-auto flex px-4 h-16 items-center justify-between dark:bg-gray-900'> 
 
 
         <PrimaryLink href='/'>Icon Generator</PrimaryLink>
@@ -21,7 +21,7 @@ export function Header() {
         <ul className='flex gap-2'>
             {!isLoggedIn && <li>            
                 <Button 
-                    onClick={() => 
+                    onClick={():unknown => 
                         signIn().catch(console.error)
                     }
                 >
@@ -32,7 +32,7 @@ export function Header() {
             <>
                 <li>
                     <Button 
-                        onClick={() => 
+                        onClick={():unknown => 
                             buyCredits().catch(console.error)
                         }
                     >
@@ -42,7 +42,7 @@ export function Header() {
                 <li>
                     <Button 
                         variant='secondary'
-                        onClick={() => 
+                        onClick={():unknown => 
                             signOut().catch(console.error)
                         }
                     >
