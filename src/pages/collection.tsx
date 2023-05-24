@@ -19,16 +19,6 @@ const CollectionPage: NextPage = () => {
         <main className='container mx-auto mt-24 flex min-h-screen flex-col gap-4 px-8'>
             <h1 className='text-4xl'>Your Images</h1>
             <ul className='grid grid-cols-6'>
-                {icons.data?.map(icon => {
-                    <li key={icon.id}>
-                        <Image
-                            width='100'
-                            height='100'
-                            alt={icon.prompt ?? 'an image of an icon'}
-                            src={`https://${BUCKET_NAME}.s3.us-west-1.amazonaws.com/${icon.id}`}
-                        />
-                    </li>
-                })}
             </ul>
         </main>
         </>
