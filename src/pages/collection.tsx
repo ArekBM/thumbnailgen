@@ -8,7 +8,7 @@ const CollectionPage: NextPage = () => {
 
     const BUCKET_NAME = 'thumbnail-gen'
 
-    const images = api.images.getImages.useQuery()
+    const icons = api.icons.getIcons.useQuery()
 
     return (
         <>
@@ -18,20 +18,18 @@ const CollectionPage: NextPage = () => {
         </Head>
         <main className='container mx-auto mt-24 flex min-h-screen flex-col gap-4 px-8'>
             <h1 className='text-4xl'>Your Images</h1>
-            <section className='grid grid-cols-6'>
-                <ul>
-                    {images.data?.map((image: Icon) => {
-                        <li key={image.id}>
-                            <Image 
+            <ul className='grid grid-cols-6'>
+                {icons.data?.map(icon => {
+                    <li key={icon.id}>
+                        <Image
                             width='100'
                             height='100'
-                            alt={image.prompt ?? 'animage of an icon'}
-                            src={`https://${BUCKET_NAME}.s3.us-west-1.amazonaws.com/${image.id}`}
-                            />
-                        </li>
-                    })}
-                </ul>
-            </section>
+                            alt={icon.prompt ?? 'an image of an icon'}
+                            src={`https://${BUCKET_NAME}.s3.us-west-1.amazonaws.com/${icon.id}`}
+                        />
+                    </li>
+                })}
+            </ul>
         </main>
         </>
     )
