@@ -1,6 +1,8 @@
-import Link from 'next/link'
-export function PrimaryLink(props: React.ComponentPropsWithoutRef<'a'> & {href: string}){
-    return<Link className='hover:text-cyan-500' {...props}>
+import Link, { type LinkProps } from 'next/link'
+import { type ReactNode } from 'react'
+export function PrimaryLink(props: LinkProps & { children: ReactNode }){
+    return(
+    <Link className='hover:text-cyan-500' {...props}>
         {props.children}
-    </Link>
+    </Link>)
 }

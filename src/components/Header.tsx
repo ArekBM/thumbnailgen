@@ -3,6 +3,7 @@ import { PrimaryLink } from './PrimaryLink'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { Button } from '~/components/Button'
 import { useBuyCredits } from '~/hooks/useBuyCredits'
+import { api } from '~/utils/api'
 
 export function Header() {
 
@@ -11,51 +12,57 @@ export function Header() {
 
     const { buyCredits } = useBuyCredits()
 
+    const credits = api.user.getCredits.useQuery()
+
     return (
-    <header className='container mx-auto flex px-4 h-20 items-center justify-between dark:bg-gray-900'> 
+    <header className='dark:bg-gray-900'> 
 
-
-        <PrimaryLink href='/'>Icon Generator</PrimaryLink>
-        <ul className='flex text-2xl gap-4 items-center'>
-            <li><PrimaryLink href='/generate'>Generate</PrimaryLink></li>
-        {/* {isLoggedIn &&
-            <li><PrimaryLink href='/collection'>Collection</PrimaryLink></li>
-        } */}
-            <li><PrimaryLink href='/collection'>Collection</PrimaryLink></li>
-        </ul>
-        <ul className='flex gap-2'>
-            {!isLoggedIn && <li>            
-                <Button 
-                    onClick={():unknown => 
-                        signIn().catch(console.error)
-                    }
-                >
-                    Login
-                </Button>
-            </li>}
+        <div className='container mx-auto flex px-4 h-16 items-center justify-between'>
+            <PrimaryLink href='/'>Icon Generator</PrimaryLink>
+            <ul className='flex gap-4'>
+                <li><PrimaryLink href='/generate'>Generate</PrimaryLink></li>
+                <li><PrimaryLink href='/community'>Community</PrimaryLink></li>
             {isLoggedIn &&
-            <>
-                <li>
+                <li><PrimaryLink href='/collection'>Collection</PrimaryLink></li>
+            }
+            </ul>
+            <ul className='flex gap-4'>
+                {!isLoggedIn && <li>            
                     <Button 
                         onClick={():unknown => 
-                            buyCredits().catch(console.error)
+                            signIn().catch(console.error)
                         }
                     >
-                        Buy Credits
+                        Login
                     </Button>
-                </li>
-                <li>
-                    <Button 
-                        variant='secondary'
-                        onClick={():unknown => 
-                            signOut().catch(console.error)
-                        }
-                    >
-                        Logout
-                    </Button>
-                </li>
-            </>}
-        </ul>
+                </li>}
+                {isLoggedIn &&
+                <>
+                    <div className='flex justify-center items-center'>
+                        Credits: {credits?.data}
+                    </div>
+                    <li>
+                        <Button 
+                            onClick={():unknown => 
+                                buyCredits().catch(console.error)
+                            }
+                        >
+                            Buy Credits
+                        </Button>
+                    </li>
+                    <li>
+                        <Button 
+                            variant='secondary'
+                            onClick={():unknown => 
+                                signOut().catch(console.error)
+                            }
+                        >
+                            Logout
+                        </Button>
+                    </li>
+                </>}
+            </ul>
+        </div>
     </header>
 )
 }
