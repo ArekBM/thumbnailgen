@@ -37,7 +37,6 @@ async function generateIcon(prompt: string) : Promise< string | undefined > {
             size: '1024x1024',
             response_format : 'b64_json'
           });
-          console.log(response.data.data[0]?.b64_json)
           return response.data.data[0]?.b64_json;
     }
 }

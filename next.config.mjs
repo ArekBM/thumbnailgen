@@ -10,7 +10,8 @@ const config = {
 
   images: {
     domains: [
-      'thumbnail-gen.s3.us-west-1.amazonaws.com'    
+      'thumbnail-gen.s3.us-west-1.amazonaws.com',   
+      'lh3.googleusercontent.com'
     ]
   },
 

@@ -4,8 +4,14 @@ import { useSession, signIn, signOut } from 'next-auth/react'
 import { Button } from '~/components/Button'
 import { useBuyCredits } from '~/hooks/useBuyCredits'
 import { api } from '~/utils/api'
+import Image from 'next/image'
+import { Fragment } from 'react'
+import { Menu, Transition } from '@headlessui/react'
+
+
 
 export function Header() {
+
 
     const session = useSession()
     const isLoggedIn = !!session.data
@@ -13,6 +19,8 @@ export function Header() {
     const { buyCredits } = useBuyCredits()
 
     const credits = api.user.getCredits.useQuery()
+
+    const pfp = api.user.getPFP.useQuery()
 
     return (
     <header className='dark:bg-gray-900'> 
@@ -51,14 +59,35 @@ export function Header() {
                         </Button>
                     </li>
                     <li>
-                        <Button 
-                            variant='secondary'
-                            onClick={():unknown => 
-                                signOut().catch(console.error)
-                            }
-                        >
-                            Logout
-                        </Button>
+                        <Menu as='div' className='relative inline-block text-left'>
+                            <Menu.Button>
+                                <Image 
+                                    className='rounded-full'
+                                    width='40'
+                                    height='40'
+                                    alt='PFP'
+                                    src={pfp?.data ?? 'PFP'}
+                                />
+                            </Menu.Button>
+                            <Menu.Items className='absolute right-0 mt-2 w-40 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+                                <div className='px-1 py-1'>
+                                    <Menu.Item>
+                                    {({ active }) => (
+                                        <button 
+                                            className={`${
+                                                active ? 'bg-blue-400 text-white dark:bg-grey-700' : 'text-gray-900'
+                                            } group flex w-full items-center rounded-md px-2 py-2`}
+                                            onClick={():unknown => 
+                                                signOut().catch(console.error)
+                                            }
+                                        >
+                                            Logout
+                                        </button>
+                                    )}
+                                    </Menu.Item>
+                                </div>
+                            </Menu.Items>
+                        </Menu>
                     </li>
                 </>}
             </ul>
