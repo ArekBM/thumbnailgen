@@ -2,7 +2,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
-
+import Image from 'next/image'
 import { api } from "~/utils/api";
 import { PrimaryLink } from "~/components/PrimaryLink";
 
@@ -13,7 +13,12 @@ function HeroBanner(){
       <p className='text-2xl'>Use AI to generate thumbnails instead of paying a designer and waiting for them to create them for you</p>
     </div>
     <div>
-      <h1>IMAGE</h1>
+      <Image
+        width='500'
+        height='500'
+        alt='Hero'
+        src='/aigen.png'
+        />
     </div>
     <PrimaryLink href='/generate'>Generate Your Icons</PrimaryLink>
   </section>

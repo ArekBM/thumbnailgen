@@ -66,7 +66,7 @@ export function Header() {
                                     width='40'
                                     height='40'
                                     alt='PFP'
-                                    src={pfp?.data ?? 'PFP'}
+                                    src={pfp?.data ?? '/PFP'}
                                 />
                             </Menu.Button>
                             <Menu.Items className='absolute right-0 mt-2 w-40 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
