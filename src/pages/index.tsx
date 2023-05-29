@@ -15,9 +15,9 @@ function HeroBanner(){
     <div>
       <Image
         width='500'
-        height='500'
+        height='800'
         alt='Hero'
-        src='/aigen.png'
+        src='/bgaigen.png'
         />
     </div>
     <PrimaryLink href='/generate'>Generate Your Icons</PrimaryLink>
