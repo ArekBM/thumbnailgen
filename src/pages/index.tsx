@@ -15,8 +15,8 @@ function HeroBanner(){
     <div>
       <Image
         className='order-first sm:-order-none'
-        width='400'
-        height='300'
+        width='600'
+        height='600'
         alt='Hero'
         src='/bgaigen.png'
         />
