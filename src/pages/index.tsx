@@ -7,15 +7,16 @@ import { api } from "~/utils/api";
 import { PrimaryLink } from "~/components/PrimaryLink";
 
 function HeroBanner(){
-  return <section className='grid grid-cols-2 gap-12 px-8 mt-24'>
+  return <section className='grid grid-cols-2 gap-12 px-8 mt-24 '>
     <div className='flex flex-col gap-4'>
       <h1 className='text-4xl'>Generate Thumbnails with a Click of a Button</h1>
       <p className='text-2xl'>Use AI to generate thumbnails instead of paying a designer and waiting for them to create them for you</p>
     </div>
     <div>
       <Image
-        width='500'
-        height='800'
+        className='order-first sm:-order-none'
+        width='400'
+        height='300'
         alt='Hero'
         src='/bgaigen.png'
         />
