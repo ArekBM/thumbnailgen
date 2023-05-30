@@ -21,7 +21,7 @@ function HeroBanner(){
         src='/bgaigen.png'
         />
     </div>
-    <PrimaryLink href='/generate'>Generate Your Icons</PrimaryLink>
+    <PrimaryLink href='/generate'>Generate Your Thumbnails</PrimaryLink>
   </section>
 }
 

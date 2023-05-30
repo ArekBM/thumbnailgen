@@ -18,7 +18,7 @@ const CommunityPage: NextPage = () => {
             <meta content='Community Hub' />
         </Head>
         <main className='container mx-auto mt-24 flex min-h-screen flex-col gap-4 px-8'>
-            <h1 className='text-4xl'>Community Icons</h1>
+            <h1 className='text-4xl'>Community Thumbnails</h1>
             <ul className='grid grid-cols-6 gap-4'>
                 {allIcons.data?.map((icon) => 
                 <li key={icon.id}>
