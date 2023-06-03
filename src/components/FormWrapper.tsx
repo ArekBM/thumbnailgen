@@ -2,7 +2,7 @@ import clsx from 'clsx';
 
 export function FormWrapper(props: React.ComponentPropsWithoutRef<'div'>){
     return(
-        <div {...props} className={clsx('flex flex-col gap-1', props.className)}>
+        <div {...props} className={clsx('p-4 border rounded shadow', props.className)}>
             {props.children}
         </div>
     )
