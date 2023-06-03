@@ -14,7 +14,7 @@ import clsx from 'clsx';
 
 const GeneratePage: NextPage = () => {
 
-    const [form, setForm] = useState({prompt: '', color: ''})
+    const [form, setForm] = useState({prompt: '', color: '', style: ''})
 
     const [imageUrl, setImageUrl] = useState('')
 
@@ -36,6 +36,21 @@ const GeneratePage: NextPage = () => {
         'Purple'
     ]
 
+    const artStyles = [
+        'Photography',
+        'Drawing',
+        'Impresionism',
+        'Surrealism',
+        'Expressionism',
+        'Cubism',
+        'Abstract',
+        'Pop art',
+        'Minimalism',
+        'Modern art',
+        'Digital art',
+        'Conceptual art'
+    ]
+
     const session = useSession()
 
     const isLoggedIn = !!session.data
@@ -53,7 +68,8 @@ const GeneratePage: NextPage = () => {
         e.preventDefault()
         generateIcon.mutate({
             prompt: form.prompt,
-            color: form.color
+            color: form.color,
+            style: form.style
         })
         setForm((prev) => ({...prev, prompt: ''}))
     }
@@ -86,6 +102,22 @@ const GeneratePage: NextPage = () => {
                             ></input>
 
                             {color}
+                        </label>
+                    ))}
+
+                </FormWrapper>
+                <h2 className='text-xl'>
+                    3. CHoose art style
+                </h2>
+                <FormWrapper className='mb-12 grid grid-cols-4'>
+                    {artStyles.map((style) => (
+                        <label className='text-2xl' key={style}>
+                            <input type='radio' name='color' value={style}
+                            checked={style === form.style}
+                            onChange={() => setForm((prev) => ({ ...prev, style}))}
+                            ></input>
+
+                            {style}
                         </label>
                     ))}
 

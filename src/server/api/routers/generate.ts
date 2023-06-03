@@ -48,6 +48,7 @@ export const generateRouter = createTRPCRouter({
         z.object({
             prompt: z.string(),
             color: z.string(),
+            style: z.string()
         })
     )
     .mutation(async ({ ctx, input }) => {
@@ -72,7 +73,7 @@ export const generateRouter = createTRPCRouter({
             });
         }
 
-        const finalPrompt = `${input.prompt} in ${input.color}`
+        const finalPrompt = `${input.prompt} in ${input.color}, ${input.style}`
 
         const b64Img = await generateIcon(finalPrompt)
 
