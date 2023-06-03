@@ -66,7 +66,8 @@ const GeneratePage: NextPage = () => {
         <main className='container mx-auto mt-24 flex min-h-screen flex-col gap-4'>
             <h1 className='text-6xl'>Generate your Image</h1>
             <p className='text-4xl'>Fill out the form below to start generating with AI</p>
-            <form className='flex flex-col gap-5' onSubmit={handleFormSubmit}>
+            <FormWrapper>
+                <form className='flex flex-col gap-5' onSubmit={handleFormSubmit}>
                 <h2 className='text-xl'>
                     1. Describe the image 
                 </h2>
@@ -92,6 +93,7 @@ const GeneratePage: NextPage = () => {
                 </FormWrapper>
                 <Button disabled={generateIcon.isLoading} isLoading={generateIcon.isLoading}>Submit</Button>
             </form>
+            </FormWrapper>
             {imageUrl && (
                 <>
                     <h1 className='text-xl'>Your Thumbnails</h1>
