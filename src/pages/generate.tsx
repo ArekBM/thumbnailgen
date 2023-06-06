@@ -74,6 +74,7 @@ const GeneratePage: NextPage = () => {
         setForm((prev) => ({...prev, prompt: ''}))
     }
 
+
     return (
         <>
         <Head>
@@ -107,7 +108,7 @@ const GeneratePage: NextPage = () => {
 
                 </FormWrapper>
                 <h2 className='text-xl'>
-                    3. CHoose art style
+                    3. Choose art style
                 </h2>
                 <FormWrapper className='mb-12 grid grid-cols-4'>
                     {artStyles.map((style) => (
@@ -122,7 +123,8 @@ const GeneratePage: NextPage = () => {
                     ))}
 
                 </FormWrapper>
-                <Button disabled={generateIcon.isLoading} isLoading={generateIcon.isLoading}>Submit</Button>
+                {isLoggedIn && <Button disabled={generateIcon.isLoading} isLoading={generateIcon.isLoading}>Submit</Button>}
+                {!isLoggedIn && <Button disabled>Must Be Logged In</Button>}
             </form>
             {imageUrl && (
                 <>
