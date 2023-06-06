@@ -82,18 +82,11 @@ const GeneratePage: NextPage = () => {
         </Head>
         <main className='container mx-auto mt-24 flex min-h-screen flex-col gap-4'>
             <h1 className='text-6xl'>Generate your Image</h1>
-            <p className='text-4xl'>Fill out the form below to start generating with AI</p>
-            <form className='flex flex-col gap-5' onSubmit={handleFormSubmit}>
-                <h2 className='text-xl'>
-                    1. Describe the image 
-                </h2>
+            <form onSubmit={handleFormSubmit}>
                 <FormWrapper>
                     <label>Prompt</label>
                     <Input value={form.prompt} onChange={updateForm('prompt')}></Input>
                 </FormWrapper>
-                <h2 className='text-xl'>
-                    2. Choose your color
-                </h2>
                 <FormWrapper className='mb-12 grid grid-cols-4'>
                     {colors.map((color) => (
                         <label className='text-2xl' key={color}>
@@ -105,7 +98,6 @@ const GeneratePage: NextPage = () => {
                             {color}
                         </label>
                     ))}
-
                 </FormWrapper>
                 <h2 className='text-xl'>
                     3. Choose art style
