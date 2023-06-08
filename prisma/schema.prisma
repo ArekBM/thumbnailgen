@@ -52,7 +52,7 @@ model User {
     name          String?
     email         String?   @unique
     emailVerified DateTime?
-    image         String?
+    image         String?  
     credits       Int       @default(5)
     accounts      Account[]
     sessions      Session[]

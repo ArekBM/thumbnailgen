@@ -17,7 +17,7 @@ const CollectionPage: NextPage = () => {
             <meta content='Your Collection' />
         </Head>
         <main className='container mx-auto mt-24 flex min-h-screen flex-col gap-4 px-8'>
-            <h1 className='text-4xl'>Your Images</h1>
+            <h1 className='text-4xl text-center'>Your Images</h1>
             <ul className='grid grid-cols-6 gap-2'>
                 {icons.data?.map((icon: Icon ) => 
                     <li key={icon.id}>

@@ -95,6 +95,6 @@ export const generateRouter = createTRPCRouter({
         return {
             imageUrl: `https://${BUCKET_NAME}.s3.us-west-1.amazonaws.com/${icon.id}`
         }
-
+        
     }),
 });
