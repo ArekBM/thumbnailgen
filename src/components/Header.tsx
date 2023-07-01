@@ -7,10 +7,15 @@ import { api } from '~/utils/api'
 import Image from 'next/image'
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
+import { string } from 'yargs'
 
 
 
 export function Header() {
+
+    const PFP = api.user.getPFP.useQuery()
+
+
 
 
     const session = useSession()
@@ -20,7 +25,21 @@ export function Header() {
 
     const credits = api.user.getCredits.useQuery()
 
-    const pfp = api.user.getPFP.useQuery()
+
+    // const [currPFP, setPFP] = useState('/PFP')
+
+    // useEffect(() => {
+    //     async function fetchPFP(){
+    //         try{
+    //             const PFP = api.user.getPFP.useQuery()?.data
+    //             setPFP(`${PFP}`)
+    //         } catch(error){
+    //             console.error(error)
+    //         }
+    // }
+    // fetchPFP();
+    // }, ['/PFP']);
+
 
     return (
     <header className='dark:bg-gray-900'> 
@@ -66,7 +85,7 @@ export function Header() {
                                     width='40'
                                     height='40'
                                     alt='PFP'
-                                    src={pfp?.data ?? '/PFP'}
+                                    src={PFP?.data ?? '/PFP'}
                                 />
                             </Menu.Button>
                             <Menu.Items className='absolute right-0 mt-2 w-40 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>

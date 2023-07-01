@@ -32,6 +32,7 @@ export const env = createEnv({
     HOST_NAME: z.string(),
     PRICE_ID: z.string(),
     STRIPE_WEBHOOK_SECRET: z.string(),
+    REPLICATE_API_KEY: z.string(),
   },
 
   /**
@@ -64,5 +65,6 @@ export const env = createEnv({
     HOST_NAME : process.env.HOST_NAME,
     PRICE_ID : process.env.PRICE_ID,
     STRIPE_WEBHOOK_SECRET : process.env.STRIPE_WEBHOOK_SECRET,
+    REPLICATE_API_KEY : process.env.REPLICATE_API_KEY,
   },
 });
