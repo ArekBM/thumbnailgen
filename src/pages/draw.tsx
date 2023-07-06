@@ -1,6 +1,7 @@
 import { type NextPage } from 'next'
 import { useState } from 'react'
 import Head from 'next/head'
+import { useRef } from 'react'
 import { Input } from '~/components/Input'
 import { api } from '~/utils/api'
 import { FormWrapper } from '~/components/FormWrapper'
@@ -9,12 +10,15 @@ import { Button } from '~/components/Button'
 import { b64Image } from '~/data/b64img'
 import Image from 'next/image';
 import clsx from 'clsx';
+import { ReactSketchCanvas, ReactSketchCanvasRef } from 'react-sketch-canvas'
 
 const DrawPage : NextPage = () => {
 
     const [form, setForm] = useState({prompt: ''})
 
     const [imageUrl, setImageUrl] = useState('')
+
+    const [drawing, setDrawing] = useState('')
 
     const drawImage = api.draw.drawPrompt.useMutation({
         onSuccess(data){
@@ -25,6 +29,8 @@ const DrawPage : NextPage = () => {
     const session = useSession()
 
     const isLoggedIn = !!session.data
+
+    const canvasRef = useRef<ReactSketchCanvasRef>(null)
 
     function updateForm(key: string){
         return function(e: React.ChangeEvent<HTMLInputElement>){
@@ -55,16 +61,28 @@ const DrawPage : NextPage = () => {
             <p className='text-4xl text-center'>Fill out the form below to start generating with AI</p>
             <form className='flex flex-col gap-5' onSubmit={handleFormSubmit}>
                 <FormWrapper>
+                    <ReactSketchCanvas
+                        ref={canvasRef}
+                        width='800'
+                        height='800'
+                        strokeWidth={4}
+                        strokeColor='black'
+                    />
                     <label>Prompt</label>
                     <Input value={form.prompt} onChange={updateForm('prompt')}></Input>
                 </FormWrapper>
-                <Button>Submit</Button>
+                <Button onClick={async () => {
+                    if(!canvasRef.current) return
+                    const drawing = await canvasRef.current.exportImage('jpeg')
+                    setDrawing(drawing)
+                }}>Submit</Button>
             </form>
             {imageUrl && (
                 <>
                     <h1 className='text-xl'>Your Drawing</h1>
-                    <section className='grid grid-cols-4 gap-4'>
+                    <section>
                         <p>{imageUrl}</p>
+                        <p>{drawing}</p>
                     </section>
                 </>
             )}

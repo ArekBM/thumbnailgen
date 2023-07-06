@@ -48,6 +48,7 @@ export function Header() {
             <PrimaryLink href='/'>Icon Generator</PrimaryLink>
             <ul className='flex gap-4'>
                 <li><PrimaryLink href='/generate'>Generate</PrimaryLink></li>
+                {/* <li><PrimaryLink href='/draw'>Draw</PrimaryLink></li> */}
                 <li><PrimaryLink href='/community'>Community</PrimaryLink></li>
             {isLoggedIn &&
                 <li><PrimaryLink href='/collection'>Collection</PrimaryLink></li>
