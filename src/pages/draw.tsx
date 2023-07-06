@@ -5,11 +5,8 @@ import { useRef } from 'react'
 import { Input } from '~/components/Input'
 import { api } from '~/utils/api'
 import { FormWrapper } from '~/components/FormWrapper'
-import { signIn, signOut, useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 import { Button } from '~/components/Button'
-import { b64Image } from '~/data/b64img'
-import Image from 'next/image';
-import clsx from 'clsx';
 import { ReactSketchCanvas, ReactSketchCanvasRef } from 'react-sketch-canvas'
 
 const DrawPage : NextPage = () => {

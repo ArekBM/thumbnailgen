@@ -1,11 +1,9 @@
-import Link from 'next/link'
 import { PrimaryLink } from './PrimaryLink'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { Button } from '~/components/Button'
 import { useBuyCredits } from '~/hooks/useBuyCredits'
 import { api } from '~/utils/api'
 import Image from 'next/image'
-import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 
 
@@ -48,7 +46,7 @@ export function Header() {
             <PrimaryLink href='/'>Icon Generator</PrimaryLink>
             <ul className='flex gap-4'>
                 <li><PrimaryLink href='/generate'>Generate</PrimaryLink></li>
-                {/* <li><PrimaryLink href='/draw'>Draw</PrimaryLink></li> */}
+                <li><PrimaryLink href='/draw'>Draw</PrimaryLink></li>
                 <li><PrimaryLink href='/community'>Community</PrimaryLink></li>
             {isLoggedIn &&
                 <li><PrimaryLink href='/collection'>Collection</PrimaryLink></li>
