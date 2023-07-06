@@ -15,22 +15,19 @@ const replicate = new Replicate({
 const image = ''
 const prompt = ''
 
-let on = false
 
-async function drawPrompt(prompt: string) : Promise< [string, string] | unknown > {
+
+async function drawPrompt(prompt: string) : Promise< string | unknown > {
     const output = (await replicate.run(
         'stability-ai/stable-diffusion:27b93a2413e7f36cd83da926f3656280b2931564ff050bf9575f1fdf9bcd7478',
         {
             input : {
-                image,
                 scale: 7,
-                prompt,
+                prompt: prompt,
                 image_resolution: '512',
-                n_prompt:
-                    'Cat drawn by picasso'
             }
         }
-        )) as [string, string];
+        )) 
         return output
 }
 
@@ -42,7 +39,16 @@ export const drawRouter = createTRPCRouter({
             prompt: z.string()
         })
     )
-    .mutation(async ({ ctx, input }) => {
-        
+    .mutation(async ({ input }) => {
+
+        const finalPrompt = `${input.prompt}`
+
+        const drawing = await drawPrompt(finalPrompt)
+
+        return {
+            drawing : `${drawing}`
+        }
     })
+
+
 })
