@@ -11,7 +11,10 @@ const config = {
   images: {
     domains: [
       'thumbnail-gen.s3.us-west-1.amazonaws.com',   
-      'lh3.googleusercontent.com'
+      'lh3.googleusercontent.com',
+      'replicate.com',
+      'replicate.delivery',
+      'pbxt.replicate.delivery'
     ]
   },
 

@@ -8,6 +8,7 @@ import { FormWrapper } from '~/components/FormWrapper'
 import { useSession } from 'next-auth/react'
 import { Button } from '~/components/Button'
 import { ReactSketchCanvas, ReactSketchCanvasRef } from 'react-sketch-canvas'
+import Image from 'next/image'
 
 const DrawPage : NextPage = () => {
 
@@ -20,7 +21,8 @@ const DrawPage : NextPage = () => {
     const drawImage = api.draw.drawPrompt.useMutation({
         onSuccess(data){
             if(!data?.drawing) return;
-            setImageUrl(data.drawing)
+            let img = data.drawing.split(',')
+            setImageUrl(`${img[1]}`)
         }
     })
     const session = useSession()
@@ -42,8 +44,9 @@ const DrawPage : NextPage = () => {
         e.preventDefault()
         drawImage.mutate({
             prompt: form.prompt,
+            image: drawing
         })
-        setForm((prev) => ({...prev, prompt: ''}))
+        setForm((prev) => ({...prev, prompt: '', image: ''}))
     }
 
 
@@ -56,30 +59,35 @@ const DrawPage : NextPage = () => {
         <main className='container mx-auto mt-24 flex min-h-screen flex-col gap-4'>
             <h1 className='text-6xl text-center'>Draw your Image</h1>
             <p className='text-4xl text-center'>Fill out the form below to start generating with AI</p>
-            <form className='flex flex-col gap-5' onSubmit={handleFormSubmit}>
-                <FormWrapper>
-                    <ReactSketchCanvas
+            <ReactSketchCanvas
                         ref={canvasRef}
                         width='800'
                         height='800'
                         strokeWidth={4}
                         strokeColor='black'
-                    />
+            />
+            <Button onClick={async () => {
+                if(!canvasRef.current) return
+                const drawing = await canvasRef.current.exportImage('jpeg')
+                setDrawing(drawing)
+            }}>Save</Button>
+            <form className='flex flex-col gap-5' onSubmit={handleFormSubmit}>
+                <FormWrapper>
                     <label>Prompt</label>
                     <Input value={form.prompt} onChange={updateForm('prompt')}></Input>
                 </FormWrapper>
-                <Button onClick={async () => {
-                    if(!canvasRef.current) return
-                    const drawing = await canvasRef.current.exportImage('jpeg')
-                    setDrawing(drawing)
-                }}>Submit</Button>
+            <Button>Submit</Button>
             </form>
             {imageUrl && (
                 <>
                     <h1 className='text-xl'>Your Drawing</h1>
                     <section>
-                        <p>{imageUrl}</p>
-                        <p>{drawing}</p>
+                        <Image 
+                            src={imageUrl} 
+                            alt='Image of your prompt'
+                            width='512'
+                            height='512'
+                        />
                     </section>
                 </>
             )}
