@@ -48,7 +48,8 @@ const GeneratePage: NextPage = () => {
         'Minimalism',
         'Modern art',
         'Digital art',
-        'Conceptual art'
+        'Conceptual art',
+        'testing'
     ]
 
     const session = useSession()
